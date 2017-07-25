@@ -7,12 +7,17 @@ export default new Router({
   routes: [
     {
       path: '*',
-      redirect: '/hello'
+      redirect: '/log-table'
     },
     {
       path: '/hello',
       name: 'hello',
       component: require('@/components/hello')
+    },
+    {
+      path: '/log-table',
+      name: 'log-table',
+      component: require('@/components/LogTable')
     }
   ]
 })
