@@ -12,4 +12,8 @@
 
 <style>
   /* CSS */
+  @import "../renderer/assets/farsifont/farsi.css";
+  body {
+    font-family: "Shabnam";
+  }
 </style>
