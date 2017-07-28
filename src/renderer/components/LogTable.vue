@@ -1,5 +1,7 @@
 <template>
-    <div dir="rtl">
+    <div class="card card-shadow " dir="rtl">
+
+        <a name="" id="" class="w-10 btn btn-success float-left" href="#" role="button">سهم جدید</a>
         <b-table striped hover
                  :responsive="true"
                  :small="true"
@@ -144,5 +146,8 @@
 </script>
 
 <style>
+    .card-shadow {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
 
 </style>
