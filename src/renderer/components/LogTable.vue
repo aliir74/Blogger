@@ -19,22 +19,30 @@
                 <div class="col-sm-6">
                     <b-form-input name="schema" type="text" placeholder="خودرو"></b-form-input>
                     <b-form-input name="number" type="number" placeholder="0"></b-form-input>
-                    <b-form-input name="price" type="text" placeholder="0">تومان</b-form-input>
+                    <b-form-input name="price" type="text" placeholder="0"></b-form-input>
                     <b-form-select v-model="transaction" :options="modalOptions"></b-form-select>
+                    <b-form-input name="buyCost" type="number" placeholder="0" ></b-form-input>
+                    <b-form-input name="date" type="date" placeholder="0" ></b-form-input>
+                    <datepicker language="fa" calendar-class="calendar card-shadow" calendar-button="true" bootstrapStyling="true"></datepicker>
                 </div>
                 <div class="col-sm-6">
-                    <b-form-input class="h-100" type="textarea" placeholder="شرح"></b-form-input>
+                    <b-form-input class="h-100" textarea placeholder="شرح"></b-form-input>
+
                 </div>
+
             </div>
         </b-modal>
+
+
 
     </div>
 </template>
 
 <script>
-    /* eslint-disable keyword-spacing,indent */
+    import Datepicker from 'vuejs-datepicker'
+/* eslint-disable keyword-spacing,indent */
 
-    export default {
+export default {
     name: 'log-table',
     data: function () {
       let transaction = 'buy'
@@ -171,8 +179,11 @@
       addStock: function () {
         ;
       }
+    },
+    components: {
+        Datepicker
     }
-  }
+}
 </script>
 
 <style>
@@ -180,4 +191,7 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
+    .calendar {
+        min-width: 350px !important;
+    }
 </style>
