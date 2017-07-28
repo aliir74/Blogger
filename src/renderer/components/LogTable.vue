@@ -1,7 +1,7 @@
 <template>
     <div class="card card-shadow " dir="rtl">
 
-        <a name="" id="" class="w-10 btn btn-success float-left" href="#" role="button">سهم جدید</a>
+        <b-btn v-b-modal.modal1 name="" id="" class="btn btn-success float-left" href="#" role="button">سهم جدید</b-btn>
         <b-table striped hover
                  :responsive="true"
                  :small="true"
@@ -13,6 +13,21 @@
         >
         </b-table>
 
+        <!-- Modal Component -->
+        <b-modal id="modal1" ok-title="تایید" close-title="انصراف" title="مشخصات سهم جدید را وارد کنید">
+            <div class="row">
+                <div class="col-sm-6">
+                    <b-form-input name="schema" type="text" placeholder="خودرو"></b-form-input>
+                    <b-form-input name="number" type="number" placeholder="0"></b-form-input>
+                    <b-form-input name="price" type="text" placeholder="0">تومان</b-form-input>
+                    <b-form-select v-model="transaction" :options="modalOptions"></b-form-select>
+                </div>
+                <div class="col-sm-6">
+                    <b-form-input class="h-100" type="textarea" placeholder="شرح"></b-form-input>
+                </div>
+            </div>
+        </b-modal>
+
     </div>
 </template>
 
@@ -22,6 +37,17 @@
     export default {
     name: 'log-table',
     data: function () {
+      let transaction = 'buy'
+      let modalOptions = [
+        {
+          text: 'خرید',
+          value: 'buy'
+        },
+        {
+          text: 'فروش',
+          value: 'sell'
+        }
+      ]
       let items = [
         {
           name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
@@ -54,6 +80,8 @@
         func(item, ['assetProfitPercentage', 'assetProfit', 'stockSalesGain', 'totalProfit'])
       })
       return {
+        transaction,
+        modalOptions,
         items,
         fields: {
           name: {
@@ -135,11 +163,13 @@
           if (!item._cellVariants) {
             item._cellVariants = {}
             item._cellVariants[columns[i]] = cellColor
-            console.log(item._cellVariants)
           } else {
             item._cellVariants[columns[i]] = cellColor
           }
         }
+      },
+      addStock: function () {
+        ;
       }
     }
   }
