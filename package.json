@@ -63,6 +63,7 @@
     "jquery": "^3.2.1",
     "persian-date": "^0.1.8-b",
     "persian-datepicker": "^0.4.5",
+    "randomcolor": "^0.5.3",
     "vue": "^2.3.3",
     "vue-chartjs": "^2.7.2",
     "vue-electron": "^1.0.6",

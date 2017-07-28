@@ -77,22 +77,13 @@
     import Vue from 'vue'
     import VueCharts from 'vue-chartjs'
     import Datepicker from 'vuejs-datepicker'
-    import PieChart from '/home/ali/Documents/Work/Bourse/Blogger/Blogger/src/renderer/components/PieChart.vue'
+    import PieChart from '/home/ali/Documents/Work/Bourse/Blogger/Blogger/src/renderer/components/PieChart.js'
+    var randomColor = require('randomcolor')
 
     Vue.use(VueCharts)
 export default {
     name: 'log-table',
     data: function () {
-      let pieData = {
-        labels: ['January', 'February'],
-        datasets: [
-          {
-            label: 'GitHub Commits',
-            backgroundColor: '#f87979',
-            data: [40, 20]
-          }
-        ]
-      }
       let transaction = 'buy'
       let modalOptions = [
         {
@@ -136,7 +127,6 @@ export default {
         func(item, ['assetProfitPercentage', 'assetProfit', 'stockSalesGain', 'totalProfit'])
       })
       return {
-        pieData,
         transaction,
         modalOptions,
         items,
@@ -204,7 +194,7 @@ export default {
           }
         },
         currentPage: 1,
-        perPage: 5,
+        perPage: 100,
         filter: null
       }
     },
@@ -227,21 +217,58 @@ export default {
       },
       addStock: function () {
         ;
+      },
+      getRandomColor: function () {
+      var letters = '0123456789ABCDEF'
+      var color = '#'
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)]
       }
+        var c
+        var hex = color
+        if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+          c = hex.substring(1).split('')
+          if (c.length === 3) {
+            c = [c[0], c[0], c[1], c[1], c[2], c[2]]
+          }
+          c = '0x' + c.join('')
+          return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',1)'
+        }
+    }
+
     },
     components: {
         Datepicker, VueCharts, PieChart
-    } /*,
-  head: {
-      link: [
-        {rel: 'stylesheet', href: 'http://rawgithub.com/babakhani/pwt.datepicker/Develop/dist/css/persian-datepicker-0.4.5.min.css', id: ''}
-      ],
-    script: [
-      {type: 'text/javascript', src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'},
-      {type: 'text/javascript', src: 'http://rawgithub.com/babakhani/PersianDate/master/dist/0.1.8/persian-date-0.1.8.min.js'},
-      {type: 'text/javascript', src: 'http://rawgithub.com/babakhani/pwt.datepicker/Develop/dist/js/persian-datepicker-0.4.5.min.js'}
-    ]
-  } */
+    },
+  computed: {
+      pieData: function () {
+        let labels = []
+        let labelData = []
+        let color = randomColor({
+          count: this.items.length,
+          hue: 'white',
+          luminosity: 'bright'
+        })
+        let tmpfunc = this.getRandomColor
+        tmpfunc()
+        this.items.forEach(function (item) {
+          labels.push(item.name)
+          labelData.push(item.portfoPercentage)
+        })
+        let pData = {
+          labels: labels,
+          datasets: [
+            {
+              label: 'GitHub Commits',
+              backgroundColor: color,
+              data: labelData
+            }
+          ]
+        }
+        console.log(pData)
+        return pData
+      }
+  }
 
 }
 </script>
