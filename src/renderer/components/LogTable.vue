@@ -17,13 +17,21 @@
         <b-modal id="modal1" ok-title="تایید" close-title="انصراف" title="مشخصات سهم جدید را وارد کنید">
             <div class="row">
                 <div class="col-sm-6">
-                    <b-form-input name="schema" type="text" placeholder="خودرو"></b-form-input>
-                    <b-form-input name="number" type="number" placeholder="0"></b-form-input>
-                    <b-form-input name="price" type="text" placeholder="0"></b-form-input>
-                    <b-form-select v-model="transaction" :options="modalOptions"></b-form-select>
-                    <b-form-input name="buyCost" type="number" placeholder="0" ></b-form-input>
-                    <b-form-input name="date" type="date" placeholder="0" ></b-form-input>
-                    <datepicker language="fa" calendar-class="calendar card-shadow" calendar-button="true" bootstrapStyling="true"></datepicker>
+                    <b-input-group class="mb-2" right="نماد" dir="ltr">
+                        <b-form-input dir='rtl' name="schema" type="text" placeholder="خودرو"></b-form-input>
+                    </b-input-group>
+                    <b-input-group class="mb-2" right="تعداد" dir="ltr">
+                        <b-form-input dir='rtl' name="number" type="number" placeholder="0"></b-form-input>
+                    </b-input-group>
+                    <b-input-group class="mb-2" right="قیمت" dir="ltr">
+                        <b-form-input dir='rtl' name="price" type="text" placeholder="0"></b-form-input>
+                    </b-input-group>
+                    <b-form-select class="mb-2" v-model="transaction" :options="modalOptions"></b-form-select>
+                    <b-input-group class="mb-2" right="قیمت خرید" dir="ltr">
+                        <b-form-input dir='rtl' name="buyCost" type="number" placeholder="0" ></b-form-input>
+                    </b-input-group>
+                    <!--<b-form-input name="date" type="date" placeholder="0" ></b-form-input>-->
+                    <datepicker :value="new Date()" class="mb-2" language="fa" calendar-class="mb-3 calendar card-shadow" calendar-button-icon="fa fa-calendar"></datepicker>
                 </div>
                 <div class="col-sm-6">
                     <b-form-input class="h-100" textarea placeholder="شرح"></b-form-input>
@@ -38,10 +46,34 @@
     </div>
 </template>
 
-<script>
-    import Datepicker from 'vuejs-datepicker'
-/* eslint-disable keyword-spacing,indent */
+<style>
+    .card-shadow {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
 
+    .calendar {
+        min-width: 350px !important;
+    }
+
+    b-input-group {
+        margin: 2px;
+    }
+</style>
+
+
+<script>
+    /*
+  import Vue from 'vue'
+  import VueRouter from 'vue-router'
+  import VueHead from 'vue-head'
+  import jQuery from 'jquery'
+
+  var $ = jQuery
+
+  Vue.use(VueHead)
+  Vue.use(VueRouter) */
+/* eslint-disable keyword-spacing,indent */
+    import Datepicker from 'vuejs-datepicker'
 export default {
     name: 'log-table',
     data: function () {
@@ -182,16 +214,17 @@ export default {
     },
     components: {
         Datepicker
-    }
+    } /*,
+  head: {
+      link: [
+        {rel: 'stylesheet', href: 'http://rawgithub.com/babakhani/pwt.datepicker/Develop/dist/css/persian-datepicker-0.4.5.min.css', id: ''}
+      ],
+    script: [
+      {type: 'text/javascript', src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'},
+      {type: 'text/javascript', src: 'http://rawgithub.com/babakhani/PersianDate/master/dist/0.1.8/persian-date-0.1.8.min.js'},
+      {type: 'text/javascript', src: 'http://rawgithub.com/babakhani/pwt.datepicker/Develop/dist/js/persian-datepicker-0.4.5.min.js'}
+    ]
+  } */
+
 }
 </script>
-
-<style>
-    .card-shadow {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-
-    .calendar {
-        min-width: 350px !important;
-    }
-</style>

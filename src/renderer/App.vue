@@ -14,6 +14,12 @@
   /* CSS */
   @import "../renderer/assets/farsifont/farsi.css";
   body {
-    font-family: "Shabnam";
+    font-family: "Shabnam" !important;
+  }
+  b-input-group {
+    font-family: "Shabnam" !important;
+  }
+  b-form-select {
+    font-family: "Shabnam" !important;
   }
 </style>
