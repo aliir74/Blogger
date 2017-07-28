@@ -41,6 +41,7 @@
             </div>
         </b-modal>
 
+        <pie-chart :data="pieData" :options="''"></pie-chart>
 
 
     </div>
@@ -73,10 +74,25 @@
   Vue.use(VueHead)
   Vue.use(VueRouter) */
 /* eslint-disable keyword-spacing,indent */
+    import Vue from 'vue'
+    import VueCharts from 'vue-chartjs'
     import Datepicker from 'vuejs-datepicker'
+    import PieChart from '/home/ali/Documents/Work/Bourse/Blogger/Blogger/src/renderer/components/PieChart.vue'
+
+    Vue.use(VueCharts)
 export default {
     name: 'log-table',
     data: function () {
+      let pieData = {
+        labels: ['January', 'February'],
+        datasets: [
+          {
+            label: 'GitHub Commits',
+            backgroundColor: '#f87979',
+            data: [40, 20]
+          }
+        ]
+      }
       let transaction = 'buy'
       let modalOptions = [
         {
@@ -120,6 +136,7 @@ export default {
         func(item, ['assetProfitPercentage', 'assetProfit', 'stockSalesGain', 'totalProfit'])
       })
       return {
+        pieData,
         transaction,
         modalOptions,
         items,
@@ -213,7 +230,7 @@ export default {
       }
     },
     components: {
-        Datepicker
+        Datepicker, VueCharts, PieChart
     } /*,
   head: {
       link: [
