@@ -12,6 +12,26 @@
                  :filter="filter"
         >
         </b-table>
+        <div class="justify-content-center my-1 mx-auto">
+            <b-pagination size="md" :total-rows="items.length" :per-page="perPage" v-model="currentPage" />
+        </div>
+
+        <!--
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+
+            </div>
+            &lt;!&ndash;
+            <div class="col-sm-4" dir="">
+                <b-form-fieldset horizontal label="سطر در صفحه" :label-cols="6">
+                    <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
+                    </b-form-select>
+                </b-form-fieldset>
+            </div>&ndash;&gt;
+        </div>
+-->
+
 
         <!-- Modal Component -->
         <b-modal id="modal1" ok-title="تایید" close-title="انصراف" title="مشخصات سهم جدید را وارد کنید">
@@ -41,8 +61,9 @@
             </div>
         </b-modal>
 
-        <pie-chart :data="pieData" :options="''"></pie-chart>
-
+        <div class="container-fluid my-2">
+            <pie-chart :data="pieData" :options="''"></pie-chart>
+        </div>
 
     </div>
 </template>
@@ -194,7 +215,7 @@ export default {
           }
         },
         currentPage: 1,
-        perPage: 100,
+        perPage: 5,
         filter: null
       }
     },
