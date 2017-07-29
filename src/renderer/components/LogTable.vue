@@ -147,6 +147,20 @@ export default {
       items.forEach(function (item) {
         func(item, ['assetProfitPercentage', 'assetProfit', 'stockSalesGain', 'totalProfit'])
       })
+      /*
+      this.$db.insert({name: 'خودرو', today: new Date()}, function (err, newDoc) {
+        if (err) {
+          console.log(err)
+        }
+        console.log(newDoc)
+      }) */
+      this.$db.find({name: 'خودرو'}, function (err, doc) {
+        if (err) {
+          console.log('err', err)
+          return
+        }
+        console.log('findDoc', doc)
+      })
       return {
         transaction,
         modalOptions,
