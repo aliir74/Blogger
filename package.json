@@ -60,6 +60,7 @@
     "bootstrap": "4.0.0-alpha.6",
     "bootstrap-vue": "^0.18.0",
     "chart.js": "^2.6.0",
+    "comma-number": "^2.0.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "nedb": "^1.8.0",

@@ -8,6 +8,9 @@ const mutations = {
   },
   INCREMENT_MAIN_COUNTER (state) {
     // state.main++
+  },
+  setState (state, docs) {
+    state.schemas = docs
   }
 }
 

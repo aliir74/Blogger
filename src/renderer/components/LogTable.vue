@@ -1,7 +1,7 @@
 <template>
     <div class="card card-shadow " dir="rtl">
 
-        <b-btn v-b-modal.modal1 name="" id="" class="btn btn-success float-left" href="#" role="button">سهم جدید</b-btn>
+        <b-btn v-b-modal.modal1 name="" id="" class="btn btn-success" href="#" role="button">سهم جدید</b-btn>
         <b-table striped hover
                  :responsive="true"
                  :small="true"
@@ -11,6 +11,46 @@
                  :per-page="perPage"
                  :filter="filter"
         >
+            <template slot="number" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="avgBuyPrice" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="finalCost" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="lastTransactionPrice" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="netMarketValue" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="assetProfitPercentage" scope="item">
+                {{item.value}}%
+            </template>
+            <template slot="finalSalePrice" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="numberOfSales" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="netWorthOfSoldStock" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="assetProfit" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="stockSalesGain" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="totalProfit" scope="item">
+                {{comma(item.value)}}
+            </template>
+            <template slot="portfoPercentage" scope="item">
+                {{item.value}}%
+            </template>
+
         </b-table>
         <div class="justify-content-center my-1 mx-auto">
             <b-pagination size="md" :total-rows="items.length" :per-page="perPage" v-model="currentPage" />
@@ -62,7 +102,7 @@
             </div>
         </b-modal>
         <div class="container-fluid my-2">
-            <pie-chart :data="pieData" :options="''"></pie-chart>
+            <pie-chart :data="pieData"></pie-chart>
         </div>
 
     </div>
@@ -93,6 +133,7 @@
     import Datepicker from 'vuejs-datepicker'
     import PieChart from '/home/ali/Documents/Work/Bourse/Blogger/Blogger/src/renderer/components/PieChart.js'
     var randomColor = require('randomcolor')
+    var commaNumber = require('comma-number')
 
     Vue.use(VueCharts)
 export default {
@@ -237,6 +278,9 @@ export default {
           }
         }
       },
+      comma: function (x) {
+        return commaNumber(x)
+      },
       addRecord: function () {
         let db = this.$db
         const self = this
@@ -314,9 +358,9 @@ export default {
       if (err) {
         console.log('err', err)
       }
-      self.$store.state.schema = docs
+        self.$store.commit('setState', docs)
     })
-    console.log('store', this.$store.state)
+    console.log('store', this.$store.state.dbStore)
   }
 
 }
