@@ -34,28 +34,28 @@
 
 
         <!-- Modal Component -->
-        <b-modal id="modal1" ok-title="تایید" close-title="انصراف" title="مشخصات سهم جدید را وارد کنید">
+        <b-modal id="modal1" ok-title="تایید" close-title="انصراف" title="مشخصات سهم جدید را وارد کنید" @ok="addRecord">
             <div class="row">
                 <div class="col-sm-6">
                     <b-input-group class="mb-2" right="نماد" dir="ltr">
-                        <b-form-input dir='rtl' name="schema" type="text" placeholder="خودرو"></b-form-input>
+                        <b-form-input dir='rtl' v-model="schema" type="text" placeholder="خودرو"></b-form-input>
                     </b-input-group>
                     <b-input-group class="mb-2" right="تعداد" dir="ltr">
-                        <b-form-input dir='rtl' name="number" type="number" placeholder="0"></b-form-input>
+                        <b-form-input dir='rtl' v-model="number" type="number" placeholder="0"></b-form-input>
                     </b-input-group>
                     <b-input-group class="mb-2" right="قیمت" dir="ltr">
-                        <b-form-input dir='rtl' name="price" type="text" placeholder="0"></b-form-input>
+                        <b-form-input dir='rtl' v-model="price" type="text" placeholder="0"></b-form-input>
                     </b-input-group>
                     <b-form-select class="mb-2" v-model="transaction" :options="modalOptions"></b-form-select>
                     <b-input-group class="mb-2" right="قیمت خرید" dir="ltr">
-                        <b-form-input dir='rtl' name="buyCost" type="number" placeholder="0" ></b-form-input>
+                        <b-form-input dir='rtl' v-model="buyCost" type="number" placeholder="0" ></b-form-input>
                     </b-input-group>
                     <!--<b-form-input name="date" type="date" placeholder="0" ></b-form-input>-->
 
-                    <datepicker :value="new Date()" class="mb-2 w-100" language="fa" calendar-class="mb-3 calendar card-shadow" calendar-button-icon="fa fa-calendar" calendar-button></datepicker>
+                    <datepicker v-model="date" class="mb-2 w-100" language="fa" calendar-class="mb-3 calendar card-shadow" calendar-button-icon="fa fa-calendar" calendar-button></datepicker>
                 </div>
                 <div class="col-sm-6">
-                    <b-form-input class="h-100" textarea placeholder="شرح"></b-form-input>
+                    <b-form-input v-model="comment" class="h-100" textarea placeholder="شرح"></b-form-input>
 
                 </div>
 
@@ -84,16 +84,6 @@
 
 
 <script>
-    /*
-  import Vue from 'vue'
-  import VueRouter from 'vue-router'
-  import VueHead from 'vue-head'
-  import jQuery from 'jquery'
-
-  var $ = jQuery
-
-  Vue.use(VueHead)
-  Vue.use(VueRouter) */
 /* eslint-disable keyword-spacing,indent */
     import Vue from 'vue'
     import VueCharts from 'vue-chartjs'
@@ -105,6 +95,8 @@
 export default {
     name: 'log-table',
     data: function () {
+      let schema, number, price, buyCost, comment
+      let date = new Date()
       let transaction = 'buy'
       let modalOptions = [
         {
@@ -147,21 +139,13 @@ export default {
       items.forEach(function (item) {
         func(item, ['assetProfitPercentage', 'assetProfit', 'stockSalesGain', 'totalProfit'])
       })
-      /*
-      this.$db.insert({name: 'خودرو', today: new Date()}, function (err, newDoc) {
-        if (err) {
-          console.log(err)
-        }
-        console.log(newDoc)
-      }) */
-      this.$db.find({name: 'خودرو'}, function (err, doc) {
-        if (err) {
-          console.log('err', err)
-          return
-        }
-        console.log('findDoc', doc)
-      })
       return {
+        schema,
+        number,
+        price,
+        buyCost,
+        date,
+        comment,
         transaction,
         modalOptions,
         items,
@@ -250,9 +234,39 @@ export default {
           }
         }
       },
-      addStock: function () {
-        ;
+      addRecord: function () {
+        let db = this.$db
+        const self = this
+        let dbId = -1
+        let insertObj = {transaction: this.transaction, number: this.number, price: this.price, buyCost: this.buyCost, date: this.date, comment: this.comment}
+        console.log(insertObj, 'insertObj')
+        this.$db.find({ schema: this.schema }, function (err, docs) {
+          if (err) {
+            console.log('insert new stock error', err)
+            return
+          }
+          if (docs.length === 0) {
+            db.insert({schema: self.schema, logs: []}, function (err, newDoc) {
+              if (err) {
+                console.log('insert err main schema error', err)
+                return
+              }
+              dbId = newDoc._id
+              db.update({ _id: dbId }, {$push: {logs: insertObj}}, {}, function () {
+              })
+              console.log('1 insert ok')
+            })
+          } else {
+            dbId = docs[0]._id
+            db.update({ _id: dbId }, {$push: {logs: insertObj}}, {}, function () {
+            })
+            console.log('2 insert ok')
+          }
+        })
       },
+      clearModal: function () {
+        
+      }
       getRandomColor: function () {
       var letters = '0123456789ABCDEF'
       var color = '#'
@@ -300,9 +314,26 @@ export default {
             }
           ]
         }
-        console.log(pData)
+        // console.log(pData)
         return pData
       }
+  },
+  mounted () {
+      /*
+      this.$db.insert({schema: 'تست', logs: []}, function (err, newDoc) {
+        if (err) {
+          console.log(err)
+        }
+        // console.log(newDoc)
+      }) */
+    /*
+    this.$db.remove({}, {}, function (err, numRemoved) {
+      if(err) {
+        console.log('err', err)
+      }
+      console.log('num removed', numRemoved)
+    }) */
+    // console.log(this.$db)
   }
 
 }
