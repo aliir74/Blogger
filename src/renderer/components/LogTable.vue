@@ -34,7 +34,7 @@
 
 
         <!-- Modal Component -->
-        <b-modal id="modal1" ok-title="تایید" close-title="انصراف" title="مشخصات سهم جدید را وارد کنید" @ok="addRecord">
+        <b-modal id="modal1" ok-title="تایید" close-title="انصراف" title="مشخصات سهم جدید را وارد کنید" @ok="addRecord" @shown="clearModal">
             <div class="row">
                 <div class="col-sm-6">
                     <b-input-group class="mb-2" right="نماد" dir="ltr">
@@ -69,6 +69,9 @@
 </template>
 
 <style>
+    .modal-footer > button {
+        margin: 3px !important;
+    }
     .card-shadow {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
@@ -263,28 +266,17 @@ export default {
             console.log('2 insert ok')
           }
         })
+        this.clearModal()
       },
       clearModal: function () {
-        
+        this.transaction = 'buy'
+        this.date = new Date()
+        this.schema = ''
+        this.number = ''
+        this.price = ''
+        this.buyCost = ''
+        this.comment = ''
       }
-      getRandomColor: function () {
-      var letters = '0123456789ABCDEF'
-      var color = '#'
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)]
-      }
-        var c
-        var hex = color
-        if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-          c = hex.substring(1).split('')
-          if (c.length === 3) {
-            c = [c[0], c[0], c[1], c[1], c[2], c[2]]
-          }
-          c = '0x' + c.join('')
-          return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',1)'
-        }
-    }
-
     },
     components: {
         Datepicker, VueCharts, PieChart
@@ -298,8 +290,6 @@ export default {
           hue: 'white',
           luminosity: 'bright'
         })
-        let tmpfunc = this.getRandomColor
-        tmpfunc()
         this.items.forEach(function (item) {
           labels.push(item.name)
           labelData.push(item.portfoPercentage)
@@ -319,21 +309,14 @@ export default {
       }
   },
   mounted () {
-      /*
-      this.$db.insert({schema: 'تست', logs: []}, function (err, newDoc) {
-        if (err) {
-          console.log(err)
-        }
-        // console.log(newDoc)
-      }) */
-    /*
-    this.$db.remove({}, {}, function (err, numRemoved) {
-      if(err) {
+      const self = this
+    this.$db.find({}, function (err, docs) {
+      if (err) {
         console.log('err', err)
       }
-      console.log('num removed', numRemoved)
-    }) */
-    // console.log(this.$db)
+      self.$store.state.schema = docs
+    })
+    console.log('store', this.$store.state)
   }
 
 }
