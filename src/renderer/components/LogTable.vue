@@ -12,43 +12,43 @@
                  :filter="filter"
         >
             <template slot="number" scope="item">
-                {{comma(item.value)}}
+                <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template slot="avgBuyPrice" scope="item">
-                {{comma(item.value)}}
+                <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template slot="finalCost" scope="item">
-                {{comma(item.value)}}
+                <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template slot="lastTransactionPrice" scope="item">
-                {{comma(item.value)}}
+                <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template slot="netMarketValue" scope="item">
-                {{comma(item.value)}}
+                <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template  slot="assetProfitPercentage" scope="item">
-                <span :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{item.value}}%</span>
+                <span dir=ltr :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{item.value}}%</span>
             </template>
             <template slot="finalSalePrice" scope="item">
-                {{comma(item.value)}}
+                <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template slot="numberOfSales" scope="item">
-                {{comma(item.value)}}
+                <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template slot="netWorthOfSoldStock" scope="item">
-                {{comma(item.value)}}
+                <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template slot="assetProfit" scope="item">
-                <span :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{comma(item.value)}}</span>
+                <span dir="ltr" :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{comma(item.value)}}</span>
             </template>
             <template slot="stockSalesGain" scope="item">
-                <span :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{comma(item.value)}}</span>
+                <span dir="ltr" :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{comma(item.value)}}</span>
             </template>
             <template slot="totalProfit" scope="item">
-                <span :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{comma(item.value)}}</span>
+                <span dir="ltr" :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{comma(item.value)}}</span>
             </template>
             <template slot="portfoPercentage" scope="item">
-                {{item.value}}%
+                <span dir="ltr">{{item.value}}%</span>
             </template>
 
         </b-table>
@@ -154,9 +154,9 @@ export default {
       ]
       let items = [
         {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '-121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '-1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '-1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
         }, {
           name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
         }, {
