@@ -51,7 +51,8 @@
                         <b-form-input dir='rtl' name="buyCost" type="number" placeholder="0" ></b-form-input>
                     </b-input-group>
                     <!--<b-form-input name="date" type="date" placeholder="0" ></b-form-input>-->
-                    <datepicker :value="new Date()" class="mb-2" language="fa" calendar-class="mb-3 calendar card-shadow" calendar-button-icon="fa fa-calendar"></datepicker>
+
+                    <datepicker :value="new Date()" class="mb-2 w-100" language="fa" calendar-class="mb-3 calendar card-shadow" calendar-button-icon="fa fa-calendar" calendar-button></datepicker>
                 </div>
                 <div class="col-sm-6">
                     <b-form-input class="h-100" textarea placeholder="شرح"></b-form-input>
@@ -60,7 +61,6 @@
 
             </div>
         </b-modal>
-
         <div class="container-fluid my-2">
             <pie-chart :data="pieData" :options="''"></pie-chart>
         </div>

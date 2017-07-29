@@ -7,6 +7,7 @@ import store from './store'
 import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import 'font-awesome/css/font-awesome'
 /* ( there may be other imports here ) */
 
 Vue.use(BootstrapVue)

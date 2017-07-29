@@ -2,6 +2,11 @@
 
 import { app, BrowserWindow } from 'electron'
 
+var Datastore = require('nedb')
+var path = require('path')
+var db = new Datastore({ filename: path.join(app.getAppPath(), 'database.db') })
+
+console.log(path.join(app.getAppPath(), 'database.db'))
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -24,7 +29,21 @@ function createWindow () {
     useContentSize: true,
     width: 1000
   })
-
+  db.insert({name: 'خودرو', today: new Date()}, function (err, newDoc) {
+    if (err) {
+      console.log(err)
+    }
+    console.log('h1')
+    console.log(newDoc)
+  })
+  console.log('hello')
+  db.find({name: 'خودرو'}, function (err, doc) {
+    if (err) {
+      console.log(err)
+    }
+    console.log('100')
+    console.log(doc)
+  })
   mainWindow.loadURL(winURL)
 
   mainWindow.on('closed', () => {
