@@ -27,7 +27,7 @@
                 <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template  slot="assetProfitPercentage" scope="item">
-                <span dir=ltr :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{item.value}}%</span>
+                <span dir=ltr :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{item.value > 0 ? '+' : ''}}{{item.value}}%</span>
             </template>
             <template slot="finalSalePrice" scope="item">
                 <span dir="ltr">{{comma(item.value)}}</span>
@@ -39,13 +39,13 @@
                 <span dir="ltr">{{comma(item.value)}}</span>
             </template>
             <template slot="assetProfit" scope="item">
-                <span dir="ltr" :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{comma(item.value)}}</span>
+                <span dir="ltr" :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{item.value > 0 ? '+' : ''}}{{comma(item.value)}}</span>
             </template>
             <template slot="stockSalesGain" scope="item">
-                <span dir="ltr" :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{comma(item.value)}}</span>
+                <span dir="ltr" :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{item.value > 0 ? '+' : ''}}{{comma(item.value)}}</span>
             </template>
             <template slot="totalProfit" scope="item">
-                <span dir="ltr" :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{comma(item.value)}}</span>
+                <span dir="ltr" :class="[item.value > 0 ? 'text-success' : '', item.value < 0 ? 'text-danger' : '']">{{item.value > 0 ? '+' : ''}}{{comma(item.value)}}</span>
             </template>
             <template slot="portfoPercentage" scope="item">
                 <span dir="ltr">{{item.value}}%</span>
@@ -78,7 +78,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <b-input-group class="mb-2" right="نماد" dir="ltr">
-                        <b-form-input dir='rtl' v-model="schema" type="text" placeholder="خودرو"></b-form-input>
+                        <b-form-input dir='rtl' v-on:change="onChangeSearch" v-model="schema" type="text" placeholder="خودرو"></b-form-input>
                     </b-input-group>
                     <b-input-group class="mb-2" right="تعداد" dir="ltr">
                         <b-form-input dir='rtl' v-model="number" type="number" placeholder="0"></b-form-input>
@@ -132,6 +132,7 @@
     import VueCharts from 'vue-chartjs'
     import Datepicker from 'vuejs-datepicker'
     import PieChart from '/home/ali/Documents/Work/Bourse/Blogger/Blogger/src/renderer/components/PieChart.js'
+    import axios from 'axios'
     var randomColor = require('randomcolor')
     var commaNumber = require('comma-number')
 
@@ -139,6 +140,7 @@
 export default {
     name: 'log-table',
     data: function () {
+      let onlineSchemas = []
       let schema, number, price, buyCost, comment
       let date = new Date()
       let transaction = 'buy'
@@ -154,29 +156,29 @@ export default {
       ]
       let items = [
         {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '-121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '-1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '-121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '-1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '13.5'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '-1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '-1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '3.5'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '23'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '5'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '1'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '2'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '2'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '10'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '12'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '11'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '9'
         }, {
-          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '93.5'
+          name: 'خودرو۱', status: 'مجاز', number: 283, avgBuyPrice: '954242', finalCost: '270050912', lastTransactionPrice: '966666', netMarketValue: '121121121', assetProfitPercentage: '1.15', finalSalePrice: '828222', numberOfSales: '0', netWorthOfSoldStock: '0', assetProfit: '1211222', stockSalesGain: '0', totalProfit: '1111222', portfoPercentage: '13.5'
         }
       ]
       // let func = this.setCellVariants
@@ -184,6 +186,7 @@ export default {
         // func(item, ['assetProfitPercentage', 'assetProfit', 'stockSalesGain', 'totalProfit'])
       })
       return {
+        onlineSchemas,
         schema,
         number,
         price,
@@ -262,6 +265,19 @@ export default {
       }
     },
     methods: {
+      onChangeSearch: function () {
+        console.log('test')
+        /*
+        await axios.get(`http://www.tsetmc.com/tsev2/data/search.aspx?skey` + this.schema)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            // this.posts = response.data
+            console.log(response.data)
+          })
+          .catch(e => {
+            this.errors.push(e)
+          }) */
+      },
       setCellVariants: function (item, columns) {
         for(var i = 0; i < columns.length; i++) {
           let cellColor = ''
@@ -361,6 +377,22 @@ export default {
         self.$store.commit('setState', docs)
     })
     console.log('store', this.$store.state.dbStore)
+  },
+  watch: {
+      schema: async function (val, oldVal) {
+        if(val.length > 2) {
+          console.log(`http://www.tsetmc.com/tsev2/data/search.aspx?skey=` + this.schema)
+          await axios.get(`http://www.tsetmc.com/tsev2/data/search.aspx?skey=` + this.schema)
+            .then(response => {
+              // JSON responses are automatically parsed.
+              // this.posts = response.data
+              console.log(response.data)
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+        }
+      }
   }
 
 }
