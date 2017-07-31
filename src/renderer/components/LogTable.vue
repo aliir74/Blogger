@@ -267,8 +267,7 @@ export default {
     methods: {
       onChangeSearch: function () {
         console.log('test')
-        /*
-        await axios.get(`http://www.tsetmc.com/tsev2/data/search.aspx?skey` + this.schema)
+        axios.get(`http://members.tsetmc.com/tsev2/excel/MarketWatchPlus.aspx?d=0`)
           .then(response => {
             // JSON responses are automatically parsed.
             // this.posts = response.data
@@ -276,7 +275,7 @@ export default {
           })
           .catch(e => {
             this.errors.push(e)
-          }) */
+          })
       },
       setCellVariants: function (item, columns) {
         for(var i = 0; i < columns.length; i++) {
