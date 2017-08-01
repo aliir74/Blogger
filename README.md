@@ -1,6 +1,6 @@
-# blogger
+# Blogger
 
-> a bourse logger application
+This is a cross platfrom application based on electron-vue template. Bourse logger is a application for managing stock sell and buy and see benefits, losses and etc.
 
 #### Build Setup
 
